@@ -1,4 +1,5 @@
 import 'package:favourite_place_app/provider/user_places.dart';
+import 'package:favourite_place_app/widgets/image_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -47,6 +48,10 @@ class _AddScreenState extends ConsumerState<AddScreen> {
                     .copyWith(color: Theme.of(context).colorScheme.surface),
                 controller: _titleController,
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              ImageInput(),
               const SizedBox(
                 height: 20,
               ),
