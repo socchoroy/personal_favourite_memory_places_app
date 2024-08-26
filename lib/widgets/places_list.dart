@@ -1,42 +1,53 @@
-import 'package:favourite_place_app/screen/place_details.dart';
+import 'package:favorite_places/screens/place_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:favourite_place_app/model/place.dart';
+
+import 'package:favorite_places/models/place.dart';
 
 class PlacesList extends StatelessWidget {
-  PlacesList({required this.place, super.key});
+  const PlacesList({super.key, required this.places});
 
-  List<Place> place;
+  final List<Place> places;
+
   @override
   Widget build(BuildContext context) {
-    if (place.isEmpty) {
-      return Container(
-        child: Center(
-          child: Text('No Place Added Yet'),
+    if (places.isEmpty) {
+      return Center(
+        child: Text(
+          'No places added yet',
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
         ),
       );
     }
+
     return ListView.builder(
-      itemCount: place.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(
-            place[index].title,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium!
-                .copyWith(color: Theme.of(context).colorScheme.surface),
-          ),
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => PlaceDetails(
-                  place: place[index],
-                ),
+      itemCount: places.length,
+      itemBuilder: (ctx, index) => ListTile(
+        leading: CircleAvatar(
+          radius: 26,
+          backgroundImage: FileImage(places[index].image),
+        ),
+        title: Text(
+          places[index].title,
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
               ),
-            );
-          },
-        );
-      },
+        ),
+        subtitle: Text(
+          places[index].location.address,
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+        ),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (ctx) => PlaceDetailScreen(place: places[index]),
+            ),
+          );
+        },
+      ),
     );
   }
 }
